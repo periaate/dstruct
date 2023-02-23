@@ -4,7 +4,6 @@ import (
 	"dstruct/util"
 	"encoding/binary"
 	"hash/fnv"
-	"math"
 	"sync"
 )
 
@@ -12,29 +11,7 @@ const (
 	bfLen = 8 * 8
 )
 
-const (
-	resizeThreshold = 0.8
-	resizeMax       = 20
-	resizeMin       = 2
-)
-
-func interpolate(value uint32) float64 {
-	var max uint32 = 10000000
-	var maxv float64 = resizeMin
-	var minv float64 = resizeMax
-	if value >= max {
-		return maxv
-	}
-
-	minLog := math.Log10(float64(max))
-	logFactor := 0 - minLog
-
-	loguint32 := (math.Log10(float64(value)) - minLog) / logFactor
-
-	linearFactor := (maxv - minv) / (1.0 - 0.0)
-	res := minv + (linearFactor * (1.0 - loguint32))
-	return res
-}
+const resizeThreshold = 0.8
 
 var MAX = 0
 
@@ -197,7 +174,7 @@ func (bm *BloomMap) Get(key uint32) (uint32, bool) {
 
 func (bm *BloomMap) resize() {
 	oldLen := bm.maxSize
-	bm.maxSize *= uint32(interpolate(bm.maxSize))
+	bm.maxSize *= uint32(util.Interpolate(bm.maxSize))
 	oldEntries := bm.entries
 	bm.currentSize = 0
 	bm.entries = make(entries, bm.maxSize)

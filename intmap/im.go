@@ -2,15 +2,10 @@ package intmap
 
 import (
 	"dstruct/util"
-	"math"
 	"sync"
 )
 
-const (
-	resizeThreshold = 0.65
-	resizeMax       = 20
-	resizeMin       = 2
-)
+const resizeThreshold = 0.65
 
 var MAX = 0
 
@@ -39,7 +34,7 @@ func (bm *HashTable) Init(size uint32) {
 func (ht *HashTable) resize() {
 	MaxJumps = 0
 	old := ht.entries
-	res := uint32(interpolate(ht.size))
+	res := uint32(util.Interpolate(ht.size))
 	newSize := ht.size * res
 	ht.entries = make([][2]uint32, newSize)
 
@@ -61,24 +56,6 @@ func (ht *HashTable) resize() {
 		}
 	}
 	defer ht.mutex.Unlock()
-}
-
-func interpolate(value uint32) float64 {
-	var max uint32 = 1000000
-	var maxv float64 = resizeMin
-	var minv float64 = resizeMax
-	if value >= max {
-		return maxv
-	}
-
-	minLog := math.Log10(float64(max))
-	logFactor := 0 - minLog
-
-	logValue := (math.Log10(float64(value)) - minLog) / logFactor
-
-	linearFactor := (maxv - minv) / (1.0 - 0.0)
-	res := minv + (linearFactor * (1.0 - logValue))
-	return res
 }
 
 var index uint32
