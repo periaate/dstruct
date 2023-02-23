@@ -17,7 +17,7 @@ func TestBloom(t *testing.T) {
 	// 	keyGen.lastTime = time.Now()
 	// 	fmt.Print("Generating keys")
 	// 	for i := uint32(0); i < size; i++ {
-	// 		keys[i] = util.HashXx(i)
+	// 		keys[i] = util.Hash(i)
 
 	// 		if i%(size/10) == 0 {
 	// 			fmt.Printf(".")

@@ -29,7 +29,8 @@ const prime = 2654435761
 
 var hash uint32
 
-func HashXx(key uint32) uint32 {
+// Upon closer inspection this is a variant of MurmurHash3. It's fast so 🤷
+func Hash(key uint32) uint32 {
 
 	hash = prime + (key>>0)*prime
 	hash = (hash << 13) | (hash >> 19)

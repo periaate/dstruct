@@ -51,7 +51,7 @@ func GenerateKeys(size int) {
 
 	fmt.Print("Generating keys")
 	for i := 0; i < size; i++ {
-		keys[i] = HashXx(uint32(i))
+		keys[i] = Hash(uint32(i))
 
 		if i%(size/10) == 0 {
 			fmt.Printf(".")

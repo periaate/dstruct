@@ -26,14 +26,14 @@ func New(size uint32) *HashTable {
 	return &HashTable{
 		entries: make([]uint64, size),
 		size:    size,
-		hashKey: util.HashXx,
+		hashKey: util.Hash,
 	}
 }
 
 func (bm *HashTable) Init(size uint32) {
 	bm.entries = make([]uint64, size)
 	bm.size = size
-	bm.hashKey = util.HashXx
+	bm.hashKey = util.Hash
 }
 
 func (ht *HashTable) resize() {

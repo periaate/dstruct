@@ -56,14 +56,14 @@ func New(size uint32) *BloomMap {
 	return &BloomMap{
 		entries: make(entries, size),
 		maxSize: size,
-		hashKey: util.HashXx,
+		hashKey: util.Hash,
 	}
 }
 
 func (bm *BloomMap) Init(size uint32) {
 	bm.entries = make(entries, size)
 	bm.maxSize = size
-	bm.hashKey = util.HashXx
+	bm.hashKey = util.Hash
 }
 
 func intToBytes(value uint32) []byte {
